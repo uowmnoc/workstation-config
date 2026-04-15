@@ -10,6 +10,18 @@
         name: htop
         state: present
 
+    - name: Ensure some packages
+      yum:
+        name: "{{packages}}"
+      vars:
+        packages:
+        - sssd-common
+        - oddjob
+        - oddjob-mkhomedir
+        - sssd-ad
+        - adcli
+        - samba-common-tools
+
     - name: Set up cron job for ansible-pull
       cron:
         name: "Ansible Pull Workstation Config"
