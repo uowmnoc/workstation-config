@@ -10,9 +10,9 @@
         name: htop
         state: present
 
-- name: Set up cron job for ansible-pull
+    - name: Set up cron job for ansible-pull
       cron:
         name: "Ansible Pull Workstation Config"
         minute: "*/30" # Runs every 30 minutes
-        job: "ansible-pull -U https://github.com/uowmnoc/workstation-config.git > /var/log/ansible-pull.log 2>&1"
+        job: "ansible-pull -U https://github.com/your-org/workstation-config.git > /var/log/ansible-pull.log 2>&1"
         user: root
