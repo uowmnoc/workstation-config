@@ -1,0 +1,11 @@
+---
+- name: Workstation Configuration
+  hosts: localhost
+  connection: local
+  become: yes # Run tasks as root/sudo
+
+  tasks:
+    - name: Ensure htop is installed
+      package:
+        name: htop
+        state: present
