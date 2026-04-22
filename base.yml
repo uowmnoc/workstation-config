@@ -1,0 +1,42 @@
+# tasks/base.yml - applies to all hosts
+---
+- name: Set timezone to UTC
+  timezone:
+    name: Europe/Athens
+
+- name: Install common packages
+  apt:
+    name:
+      - vim
+      - curl
+      - htop
+      - git
+      - unattended-upgrades
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Configure automatic security updates
+  copy:
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+      APT::Periodic::AutocleanInterval "7";
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+
+- name: Ensure SSH is hardened
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: '^PermitRootLogin', line: 'PermitRootLogin no' }
+    - { regexp: '^PasswordAuthentication', line: 'PasswordAuthentication no' }
+    - { regexp: '^X11Forwarding', line: 'X11Forwarding no' }
+  notify: Restart sshd
+
+  handlers:
+    - name: Restart sshd
+      service:
+        name: sshd
+        state: restarted
