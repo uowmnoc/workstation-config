@@ -1,3 +1,5 @@
+# local.yml - configures the local host based on its role
+---
 - name: Apply base configuration
   hosts: localhost
   connection: local
