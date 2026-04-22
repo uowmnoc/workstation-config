@@ -1,30 +1,20 @@
----
-- name: Workstation Configuration
+- name: Apply base configuration
   hosts: localhost
   connection: local
-  become: yes # Run tasks as root/sudo
+  become: yes
+
+  vars:
+    node_role: "{{ lookup('file', '/etc/ansible-role', errors='ignore') | default('base') }}"
+
+  pre_tasks:
+    - name: Display the detected node role
+      debug:
+        msg: "Configuring this host as: {{ node_role }}"
 
   tasks:
-    - name: Ensure htop is installed
-      package:
-        name: htop
-        state: present
+    - name: Include base tasks
+      include_tasks: tasks/base.yml
 
-    - name: Ensure some packages
-      yum:
-        name: "{{packages}}"
-      vars:
-        packages:
-        - sssd-common
-        - oddjob
-        - oddjob-mkhomedir
-        - sssd-ad
-        - adcli
-        - samba-common-tools
-
-    - name: Set up cron job for ansible-pull
-      cron:
-        name: "Ansible Pull Workstation Config"
-        minute: "*/30" # Runs every 30 minutes
-        job: "ansible-pull -U https://github.com/uowmnoc/workstation-config.git > /var/log/ansible-pull.log 2>&1"
-        user: root
+    - name: Include role-specific tasks
+      include_tasks: "tasks/{{ node_role }}.yml"
+      when: node_role != 'base'
