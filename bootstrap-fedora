@@ -1,0 +1,19 @@
+# Run as root
+
+# Disable SELINUX
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+
+# Update all packages
+dnf -y update
+
+# Enable sshd daemon
+systemctl enable sshd
+systemctl start sshd
+
+# Set timezone
+timedatectl set-timezone Europe/Athens
+
+# Install additional packages
+dnf -y install freeipa-client git ansible
+
+ansible-pull -U https://github.com/uowmnoc/workstation-config.git
