@@ -11,18 +11,11 @@
       - curl
       - htop
       - git
+      - sshd
       - unattended-upgrades
     state: present
     update_cache: yes
     cache_valid_time: 3600
-
-- name: Configure automatic security updates
-  copy:
-    content: |
-      APT::Periodic::Update-Package-Lists "1";
-      APT::Periodic::Unattended-Upgrade "1";
-      APT::Periodic::AutocleanInterval "7";
-    dest: /etc/apt/apt.conf.d/20auto-upgrades
 
 - name: Ensure SSH is hardened
   lineinfile:
