@@ -4,9 +4,6 @@
   timezone:
     name: Europe/Athens
 
-- name: Configure Fedora Clients
-  become: yes # Run tasks as root
-
 - name: Install required packages
   ansible.builtin.dnf:
     name:
