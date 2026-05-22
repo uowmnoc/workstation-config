@@ -37,8 +37,8 @@
     - { regexp: '^X11Forwarding', line: 'X11Forwarding no' }
   notify: Restart sshd
 
-  handlers:
-    - name: Restart sshd
-      service:
-        name: sshd
-        state: restarted
+handlers:
+  - name: Restart sshd
+    service:
+      name: sshd
+      state: restarted
