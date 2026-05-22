@@ -1,9 +1,5 @@
 # tasks/base.yml - applies to all hosts
 ---
-- name: Set timezone to UTC
-  timezone:
-    name: Europe/Athens
-
 - name: Install required packages
   ansible.builtin.dnf:
     name:
@@ -39,13 +35,6 @@
     mode: '0644'
   loop:
     - { option: 'greeter-hide-users', value: 'true' }
-
-- name: Set up cron job for ansible-pull
-  cron:
-    name: "Ansible Pull Workstation Config"
-    minute: "*/30" # Runs every 30 minutes
-    job: "ansible-pull -U https://github.com/uowmnoc/workstation-config.git --only-if-changed > /var/log/ansible-pull.log 2>&1"
-    user: root
 
 - name: Set system-wide default for Cinnamon keyboard layout shortcut
   ansible.builtin.copy:
