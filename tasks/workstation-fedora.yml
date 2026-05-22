@@ -46,3 +46,11 @@
     minute: "*/30" # Runs every 30 minutes
     job: "ansible-pull -U https://github.com/uowmnoc/workstation-config.git > /var/log/ansible-pull.log 2>&1"
     user: root
+
+- name: Set system-wide default for Cinnamon keyboard layout shortcut
+  ansible.builtin.copy:
+    dest: /etc/dconf/db/local.d/99-cinnamon-keyboard
+    content: |
+      [org/cinnamon/desktop/input-sources]
+      xkb-options=['grp:alt_shift_toggle']
+    mode: '0644'
