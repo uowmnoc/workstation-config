@@ -1,5 +1,7 @@
 # Run as root
 
+echo workstation-fedora > /etc/ansible-role
+
 # Disable SELINUX
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 
@@ -15,5 +17,7 @@ timedatectl set-timezone Europe/Athens
 
 # Install additional packages
 dnf -y install freeipa-client git ansible
+
+
 
 ansible-pull -U https://github.com/uowmnoc/workstation-config.git
