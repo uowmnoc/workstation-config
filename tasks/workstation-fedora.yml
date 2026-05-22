@@ -32,7 +32,7 @@
 - name: Configure slick-lightdm
   community.general.ini_file:
     path: /etc/lightdm/lightdm.conf
-    section: Seat
+    section: Seat:*
     option: "{{ item.option }}"
     value: "{{ item.value }}"
     create: yes
