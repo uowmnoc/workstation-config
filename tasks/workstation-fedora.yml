@@ -23,15 +23,15 @@
         mode: '0755'
 
     - name: Configure slick-greeter settings
-          community.general.ini_file:
-            path: /etc/lightdm/slick-greeter.conf
-            section: Greeter
-            option: "{{ item.option }}"
-            value: "{{ item.value }}"
-            create: yes
-            mode: '0644'
-          loop:
-            - { option: 'show-hostname', value: 'true' }
-            - { option: 'hidden-users', value: 'false' }
+      community.general.ini_file:
+        path: /etc/lightdm/slick-greeter.conf
+        section: Greeter
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
+        create: yes
+        mode: '0644'
+      loop:
+        - { option: 'show-hostname', value: 'true' }
+        - { option: 'hidden-users', value: 'false' }
         
    
