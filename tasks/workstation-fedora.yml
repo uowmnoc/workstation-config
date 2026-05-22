@@ -16,6 +16,7 @@
     state: present
     update_cache: yes
     cache_valid_time: 3600
+    
 - name: Configure lightdm
   lineinfile:
     path: /etc/lightdm/slick-greeter.conf
