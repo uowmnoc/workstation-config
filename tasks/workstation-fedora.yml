@@ -23,8 +23,8 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   loop:
-    - { regexp: '^show-hostname', line: 'show-hostname=true' }
-    - { regexp: '^hidden-users', line: 'hidden-users=false' }
+    - { regexp: '^show-hostname=', line: 'show-hostname=true' }
+    - { regexp: '^hidden-users=', line: 'hidden-users=false' }
     
 - name: Ensure SSH is hardened
   lineinfile:
@@ -37,8 +37,4 @@
     - { regexp: '^X11Forwarding', line: 'X11Forwarding no' }
   notify: Restart sshd
 
-handlers:
-  - name: Restart sshd
-    service:
-      name: sshd
-      state: restarted
+
