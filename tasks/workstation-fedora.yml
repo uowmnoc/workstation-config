@@ -5,33 +5,31 @@
     name: Europe/Athens
 
 - name: Configure Fedora Clients
-  hosts: all  # Change this to your specific inventory group (e.g., fedora_clients)
   become: yes # Run tasks as root
 
-  tasks:
-    - name: Install required packages
-      ansible.builtin.dnf:
-        name:
-          - wget
-          - htop
-        state: present
+- name: Install required packages
+  ansible.builtin.dnf:
+    name:
+      - wget
+      - htop
+    state: present
 
-    - name: Ensure lightdm directory exists
-      ansible.builtin.file:
-        path: /etc/lightdm
-        state: directory
-        mode: '0755'
+- name: Ensure lightdm directory exists
+  ansible.builtin.file:
+    path: /etc/lightdm
+    state: directory
+    mode: '0755'
 
-    - name: Configure slick-greeter settings
-      community.general.ini_file:
-        path: /etc/lightdm/slick-greeter.conf
-        section: Greeter
-        option: "{{ item.option }}"
-        value: "{{ item.value }}"
-        create: yes
-        mode: '0644'
-      loop:
-        - { option: 'show-hostname', value: 'true' }
-        - { option: 'hidden-users', value: 'false' }
+- name: Configure slick-greeter settings
+  community.general.ini_file:
+    path: /etc/lightdm/slick-greeter.conf
+    section: Greeter
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    create: yes
+    mode: '0644'
+  loop:
+    - { option: 'show-hostname', value: 'true' }
+    - { option: 'hidden-users', value: 'false' }
         
    
