@@ -16,7 +16,15 @@
     state: present
     update_cache: yes
     cache_valid_time: 3600
-
+-name: Configure lightdm
+  lineinfile:
+    path: /etc/lightdm/slick-greeter.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: '^show-hostname', line: 'show-hostname=true' }
+    - { regexp: '^hidden-users', line: 'hidden-users=false' }
+    
 - name: Ensure SSH is hardened
   lineinfile:
     path: /etc/ssh/sshd_config
