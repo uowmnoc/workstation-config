@@ -29,4 +29,14 @@
     - { option: 'show-hostname', value: 'true' }
     - { option: 'hidden-users', value: 'false' }
         
-   
+- name: Configure slick-lightdm
+  community.general.ini_file:
+    path: /etc/lightdm/lightdm.conf
+    section: Seat
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    create: yes
+    mode: '0644'
+  loop:
+    - { option: 'greeter-hide-users', value: 'true' }
+
