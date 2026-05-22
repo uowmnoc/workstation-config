@@ -21,6 +21,7 @@
         path: /etc/lightdm
         state: directory
         mode: '0755'
+
     - name: Configure slick-greeter settings
           community.general.ini_file:
             path: /etc/lightdm/slick-greeter.conf
